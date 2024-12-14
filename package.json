@@ -5,15 +5,18 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./src/index.js",
+    "dev": "cross-env nodemon ./src/index.js",
     "start": "node ./src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "config": "^3.3.12",
-    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
     "nodemon": "^3.1.9",
     "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
