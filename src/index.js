@@ -2,7 +2,7 @@ import {Telegraf} from 'telegraf';
 import {message} from "telegraf/filters";
 import config from 'config';
 
-const bot = new Telegraf(config.get("TELEGRAMM_TOKEN"));
+const bot = new Telegraf(config.get(process.env.BOT_API_KEY));
 
 bot.on(message("voice"), async (ctx) => {
     await ctx.reply(JSON.stringify(ctx.message.voice, null, 1))
