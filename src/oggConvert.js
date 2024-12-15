@@ -4,6 +4,7 @@ import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import ffmpeg from "fluent-ffmpeg";
 import installer from "@ffmpeg-installer/ffmpeg";
+import { removeVoiceFile } from "./utils.js";
 
 const __dirmane = dirname(fileURLToPath(import.meta.url));
 
@@ -19,7 +20,10 @@ class OggConvertToMp3 {
         ffmpeg(input)
           .inputOption("-t 30")
           .output(outputPath)
-          .on("end", () => resolve(outputPath))
+          .on("end", () => {
+            removeVoiceFile(input);
+            resolve(outputPath);
+          })
           .on("Error", (err) => reject(err.message))
           .run();
       });
