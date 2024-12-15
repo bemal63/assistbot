@@ -2,6 +2,7 @@ import { Telegraf } from "telegraf";
 import { message } from "telegraf/filters";
 import dotenv from "dotenv";
 import {oggConvert} from "./oggConvert.js"
+import { openai } from "./openai.js";
 
 dotenv.config()
 const bot = new Telegraf(process.env.BOT_API_KEY);
@@ -12,8 +13,12 @@ bot.on(message("voice"), async (ctx) => {
     const userId = String(ctx.message.from.id)
     const oggPath = await oggConvert.create(linkVoice.href, userId)
     const mp3Path = await oggConvert.toMp3(oggPath, userId);
+
+    const text = await openai.transcription(mp3Path);
+    // const response = await openai.chat(text)
+
     console.log(linkVoice.href)
-    await ctx.reply(mp3Path);
+    await ctx.reply(text);
   } catch (e) {
     console.log(`Its error`, e.message);
   }
